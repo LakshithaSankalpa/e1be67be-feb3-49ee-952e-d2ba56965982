@@ -10,6 +10,11 @@ class ReportGeneratorTest extends TestCase
 {
     private $generator;
 
+    /**
+     * setUp
+     *
+     * @return void
+     */
     protected function setUp(): void
     {
         $this->generator = new ReportGenerator();
@@ -17,6 +22,13 @@ class ReportGeneratorTest extends TestCase
 
     // ////// Helpers //////////////
 
+    /**
+     * isCorrectFromGenerator
+     *
+     * @param  mixed $response
+     * @param  mixed $questionId
+     * @return void
+     */
     private function isCorrectFromGenerator($response, $questionId)
     {
         foreach ($this->generator->getQuestions() as $q) {
@@ -29,17 +41,32 @@ class ReportGeneratorTest extends TestCase
 
     // //////// Cases ////////////////
 
+    /**
+     * testGetStudentName
+     *
+     * @return void
+     */
     public function testGetStudentName()
     {
         $this->assertEquals('Tony Stark', $this->generator->getStudentName('student1'));
     }
 
+    /**
+     * testIsCorrect
+     *
+     * @return void
+     */
     public function testIsCorrect()
     {
         $this->assertTrue($this->isCorrectFromGenerator('option3', 'numeracy1'));
         $this->assertFalse($this->isCorrectFromGenerator('option1', 'numeracy1'));
     }
 
+    /**
+     * testGenerateDiagnostic
+     *
+     * @return void
+     */
     public function testGenerateDiagnostic()
     {
         $output = $this->generator->generateDiagnostic('student1');
@@ -48,6 +75,11 @@ class ReportGeneratorTest extends TestCase
         $this->assertStringContainsString('Number and Algebra: 5 out of 5', $output);
     }
 
+    /**
+     * testGenerateProgress
+     *
+     * @return void
+     */
     public function testGenerateProgress()
     {
         $output = $this->generator->generateProgress('student1');
@@ -55,6 +87,11 @@ class ReportGeneratorTest extends TestCase
         $this->assertStringContainsString('9 more correct', $output);
     }
 
+    /**
+     * testGenerateFeedback
+     *
+     * @return void
+     */
     public function testGenerateFeedback()
     {
         $output = $this->generator->generateFeedback('student1');

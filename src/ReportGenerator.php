@@ -19,6 +19,12 @@ class ReportGenerator
         $this->responses = json_decode(file_get_contents('data/student-responses.json'), true);
     }
 
+    /**
+     * getStudentName
+     *
+     * @param  mixed $studentId
+     * @return void
+     */
     public function getStudentName($studentId)
     {
         foreach ($this->students as $student) {
@@ -29,6 +35,12 @@ class ReportGenerator
         return 'Unknown Student';
     }
 
+    /**
+     * getCompletedResponses
+     *
+     * @param  mixed $studentId
+     * @return void
+     */
     public function getCompletedResponses($studentId)
     {
         $completed = [];
@@ -43,6 +55,12 @@ class ReportGenerator
         return $completed;
     }
 
+    /**
+     * formatDate
+     *
+     * @param  mixed $dateStr
+     * @return void
+     */
     public function formatDate($dateStr)
     {
         $dt = DateTime::createFromFormat('d/m/Y H:i:s', $dateStr);
@@ -52,6 +70,13 @@ class ReportGenerator
         return $dateStr;
     }
 
+    /**
+     * isCorrect
+     *
+     * @param  mixed $response
+     * @param  mixed $questionId
+     * @return void
+     */
     private function isCorrect($response, $questionId)
     {
         foreach ($this->questions as $q) {
@@ -62,6 +87,13 @@ class ReportGenerator
         return false;
     }
 
+    /**
+     * getStrandCounts
+     *
+     * @param  mixed $responsesArray
+     * @param  mixed $strand
+     * @return void
+     */
     private function getStrandCounts($responsesArray, $strand)
     {
         $total = 0;
@@ -81,6 +113,12 @@ class ReportGenerator
         return [$correct, $total];
     }
 
+    /**
+     * getAssessmentName
+     *
+     * @param  mixed $assId
+     * @return void
+     */
     private function getAssessmentName($assId)
     {
         foreach ($this->assessments as $ass) {
@@ -91,6 +129,12 @@ class ReportGenerator
         return 'Unknown';
     }
 
+    /**
+     * getQuestion
+     *
+     * @param  mixed $qId
+     * @return void
+     */
     private function getQuestion($qId)
     {
         foreach ($this->questions as $q) {
@@ -101,6 +145,13 @@ class ReportGenerator
         return null;
     }
 
+    /**
+     * getOption
+     *
+     * @param  mixed $question
+     * @param  mixed $optId
+     * @return void
+     */
     private function getOption($question, $optId)
     {
         foreach ($question['config']['options'] as $opt) {
@@ -111,6 +162,12 @@ class ReportGenerator
         return ['label' => 'Unknown', 'value' => 'Unknown'];
     }
 
+    /**
+     * generateDiagnostic
+     *
+     * @param  mixed $studentId
+     * @return void
+     */
     public function generateDiagnostic($studentId)
     {
         $completions = $this->getCompletedResponses($studentId);
@@ -136,6 +193,12 @@ class ReportGenerator
         return $output;
     }
 
+    /**
+     * generateProgress
+     *
+     * @param  mixed $studentId
+     * @return void
+     */
     public function generateProgress($studentId)
     {
         $completions = $this->getCompletedResponses($studentId);
@@ -161,6 +224,12 @@ class ReportGenerator
         return $output;
     }
 
+    /**
+     * generateFeedback
+     *
+     * @param  mixed $studentId
+     * @return void
+     */
     public function generateFeedback($studentId)
     {
         $completions = $this->getCompletedResponses($studentId);
@@ -197,6 +266,11 @@ class ReportGenerator
         return $output;
     }
 
+    /**
+     * getQuestions
+     *
+     * @return void
+     */
     public function getQuestions()
     {
         return $this->questions;
