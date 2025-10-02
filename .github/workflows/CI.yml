@@ -18,7 +18,7 @@ jobs:
           php-version: "8.1"
 
       - name: Install dependencies
-        run: composer install --no-dev
+        run: composer install --dev
 
       - name: Run tests
         run: composer run test
