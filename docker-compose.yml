@@ -1,0 +1,21 @@
+# version: '3.8'
+services:
+  php-app:
+    image: php:8.1-cli
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: bash -c "apt-get update -qq && apt-get install -y unzip git && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && composer install && composer run app"
+    stdin_open: true
+    tty: true
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+
+  php-test:
+    image: php:8.1-cli
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: bash -c "apt-get update -qq && apt-get install -y unzip git && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && composer install && composer run test"
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
